@@ -1,6 +1,8 @@
 package com.zti_projekt_try0.Location;
 
+import com.zti_projekt_try0.other.DeactivateRecordResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +22,12 @@ public class LocationController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteLocation(@PathVariable("id") Long id) {
-        return ResponseEntity.notFound().build();
-//        Optional<Location> location = locationService.findById(id);
-//        if (location.isPresent()) {
-//            locationService.delete(location.get());
-//            return ResponseEntity.ok("Location with ID " + id + " has been deleted.");
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
+    public ResponseEntity<DeactivateRecordResult> deleteLocation(@PathVariable("id") int id) {
+        DeactivateRecordResult result = this.locationService.deactivateLocation(id);
+        HttpStatus status = result.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(result, status);
     }
+
+
 
 }

@@ -1,10 +1,13 @@
 package com.zti_projekt_try0.Location;
 
+import com.zti_projekt_try0.other.DeactivateRecordResult;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -14,10 +17,9 @@ public class LocationRepository{
     private JdbcTemplate jdbcTemplate;
 
 
-
     List<Location> getCurrentLocations(){
         String query = "SELECT * FROM zti_projekt2.get_current_locations()";
-        List<Location> locations = jdbcTemplate.query(query, (rs, rowNum) -> {
+        return jdbcTemplate.query(query, (rs, rowNum) -> {
             int locationId = rs.getInt("location_id");
             boolean isActive = rs.getBoolean("is_active");
             String streetAddress = rs.getString("street_address");
@@ -29,10 +31,23 @@ public class LocationRepository{
             String companyName = rs.getString("company_name");
             return new Location(locationId, isActive, streetAddress, city, zipcode, state, countryCode, activityName, companyName);
         });
-        return locations;
     }
 
     void addLocation(){
 
     }
+
+    private static final class DeactivateRecordResultMapper implements RowMapper<DeactivateRecordResult> {
+        public DeactivateRecordResult mapRow(ResultSet rs, int rowNum) throws SQLException {
+            boolean success = rs.getBoolean("success");
+            String message = rs.getString("message");
+            return new DeactivateRecordResult(success, message);
+        }
+    }
+
+    DeactivateRecordResult deactivateLocation(int location_id){
+        String sql = "SELECT * from zti_projekt2.deactivate_location(?)";
+        return jdbcTemplate.queryForObject(sql, new Object[]{location_id}, new DeactivateRecordResultMapper());
+    }
+
 }

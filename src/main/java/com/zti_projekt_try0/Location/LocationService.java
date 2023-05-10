@@ -1,5 +1,6 @@
 package com.zti_projekt_try0.Location;
 
+import com.zti_projekt_try0.other.DeactivateRecordResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class LocationService {
     }
 
 
-    public void deactivateLocation(){
-
+    public DeactivateRecordResult deactivateLocation(int location_id){
+        return locationRepository.deactivateLocation(location_id);
     }
 }
