@@ -2,6 +2,23 @@ package com.zti_projekt_try0.Activity;
 
 public class Activity {
 
+    private int activityId;
+    private boolean isActive;
+    private String activityName;
+
+    public Activity(int activityId, boolean isActive, String activityName) {
+        this.activityId = activityId;
+        this.isActive = isActive;
+        this.activityName = activityName;
+    }
+
+    public Activity(int activityId, String activityName) {
+        this.activityId = activityId;
+        this.activityName = activityName;
+    }
+
+
+
     public int getActivityId() {
         return activityId;
     }
@@ -30,18 +47,5 @@ public class Activity {
 
     }
 
-    public Activity(int activityId, boolean isActive, String activityName) {
-        this.activityId = activityId;
-        this.isActive = isActive;
-        this.activityName = activityName;
-    }
 
-    public Activity(int activityId, String activityName) {
-        this.activityId = activityId;
-        this.activityName = activityName;
-    }
-
-    private int activityId;
-    private boolean isActive;
-    private String activityName;
 }

@@ -1,17 +1,21 @@
 package com.zti_projekt_try0.Location;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.zti_projekt_try0.Activity.Activity;
+import com.zti_projekt_try0.CountryCode.CountryCode;
 
 import java.io.IOException;
 
-public class LocationSerializer extends StdSerializer<Location> {
+public class LocationSerializer extends JsonSerializer<Location> {
 
-    public LocationSerializer() {
-        super(Location.class);
+    private final JsonSerializer<Activity> activitySerializer;
+    private final JsonSerializer<CountryCode> countryCodeJsonSerializer;
+
+    public LocationSerializer(JsonSerializer<Activity> activitySerializer, JsonSerializer<CountryCode> countryCodeJsonSerializer) {
+        this.activitySerializer = activitySerializer;
+        this.countryCodeJsonSerializer = countryCodeJsonSerializer;
     }
 
     @Override
@@ -24,15 +28,10 @@ public class LocationSerializer extends StdSerializer<Location> {
         generator.writeStringField("zipcode", location.getZipcode());
         generator.writeStringField("state", location.getState());
         generator.writeStringField("companyName", location.getCompanyName());
-        generator.writeStringField("countryCode", location.getCountryCode().toString());
-        generator.writeStringField("activity", location.getActivity().toString());
+        generator.writeFieldName("activity");
+        activitySerializer.serialize(location.getActivity(), generator, provider);
+        generator.writeFieldName("countryCode");
+        countryCodeJsonSerializer.serialize(location.getCountryCode(), generator, provider);
         generator.writeEndObject();
     }
-
-    public static void registerModule(ObjectMapper mapper) {
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(Location.class, new LocationSerializer());
-        mapper.registerModule(module);
-    }
-
 }
