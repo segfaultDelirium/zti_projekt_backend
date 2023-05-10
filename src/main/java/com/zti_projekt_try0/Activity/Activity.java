@@ -1,5 +1,8 @@
 package com.zti_projekt_try0.Activity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using = ActivityDeserializer.class)
 public class Activity {
 
     private int activityId;

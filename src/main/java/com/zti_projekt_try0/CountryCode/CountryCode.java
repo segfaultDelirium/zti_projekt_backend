@@ -1,5 +1,8 @@
 package com.zti_projekt_try0.CountryCode;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using = CountryCodeDeserializer.class)
 public class CountryCode {
 
     private int countryCodeId;

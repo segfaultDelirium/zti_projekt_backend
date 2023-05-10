@@ -1,9 +1,11 @@
 package com.zti_projekt_try0.Location;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.zti_projekt_try0.Activity.Activity;
 import com.zti_projekt_try0.CountryCode.CountryCode;
 
+@JsonDeserialize(using = LocationDeserializer.class)
 public class Location {
 
     private int locationId;
@@ -19,6 +21,8 @@ public class Location {
     private CountryCode countryCode;
 
     private Activity activity;
+
+    public Location(){}
 
     public Location(int locationId, boolean isActive, String streetAddress, String city, String zipcode, String state, String companyName, CountryCode countryCode, Activity activity) {
         this.locationId = locationId;
