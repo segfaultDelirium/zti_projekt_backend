@@ -1,7 +1,5 @@
 package com.zti_projekt_try0.CountryCode;
 
-import java.sql.Timestamp;
-
 public class CountryCode {
 
     private int countryCodeId;
@@ -25,7 +23,7 @@ public class CountryCode {
         this.countryCodeId = countryCodeId;
     }
 
-    public boolean getIsActive() {
+    public boolean isActive() {
         return isActive;
     }
 

@@ -1,4 +1,4 @@
-CREATE TYPE zti_projekt2.deactivate_record_result AS (
+CREATE TYPE zti_projekt2.modification_result AS (
                                                          success BOOLEAN,
                                                          message TEXT
                                                      );

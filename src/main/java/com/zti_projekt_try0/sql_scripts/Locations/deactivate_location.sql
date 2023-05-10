@@ -1,8 +1,8 @@
 
 CREATE OR REPLACE FUNCTION zti_projekt2.deactivate_location(p_location_id INTEGER)
-    RETURNS deactivate_record_result AS $$
+    RETURNS modification_result AS $$
 DECLARE
-    result deactivate_record_result;
+    result modification_result;
 BEGIN
     -- Check if the record with the given ID exists
     if not EXISTS (SELECT 1 FROM zti_projekt2.location WHERE zti_projekt2.location.location_id = p_location_id) THEN

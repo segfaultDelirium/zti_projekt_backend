@@ -25,7 +25,7 @@ public class CountryCodeController {
         try {
             // Create a new country code with the given values
             countryCodeService.addCountryCode(
-                    countryCodeRequest.getIsActive(),
+                    countryCodeRequest.isActive(),
                     countryCodeRequest.getCountryCode()
             );
             return ResponseEntity.ok("Country code added successfully!");

@@ -1,6 +1,8 @@
 package com.zti_projekt_try0.Location;
 
-import com.zti_projekt_try0.other.DeactivateRecordResult;
+import com.zti_projekt_try0.Activity.Activity;
+import com.zti_projekt_try0.CountryCode.CountryCode;
+import com.zti_projekt_try0.other.ModificationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,9 +29,15 @@ public class LocationRepository{
             String zipcode = rs.getString("zipcode");
             String state = rs.getString("state");
             String countryCode = rs.getString("country_code");
+            int countryCodeId = rs.getInt("country_code_id");
+            boolean countryCodeIsActive = rs.getBoolean("is_country_code_active");
             String activityName = rs.getString("activity_name");
+            int activityId = rs.getInt("activity_id");
+            boolean activityIsActive = rs.getBoolean("is_activity_active");
             String companyName = rs.getString("company_name");
-            return new Location(locationId, isActive, streetAddress, city, zipcode, state, countryCode, activityName, companyName);
+            return new Location(locationId, isActive, streetAddress, city, zipcode, state, companyName,
+                    new CountryCode(countryCodeId, countryCodeIsActive, countryCode),
+                    new Activity(activityId, activityIsActive, activityName));
         });
     }
 
@@ -37,17 +45,25 @@ public class LocationRepository{
 
     }
 
-    private static final class DeactivateRecordResultMapper implements RowMapper<DeactivateRecordResult> {
-        public DeactivateRecordResult mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static final class DeactivateRecordResultMapper implements RowMapper<ModificationResult> {
+        public ModificationResult mapRow(ResultSet rs, int rowNum) throws SQLException {
             boolean success = rs.getBoolean("success");
             String message = rs.getString("message");
-            return new DeactivateRecordResult(success, message);
+            return new ModificationResult(success, message);
         }
     }
 
-    DeactivateRecordResult deactivateLocation(int location_id){
+    ModificationResult deactivateLocation(int location_id){
         String sql = "SELECT * from zti_projekt2.deactivate_location(?)";
         return jdbcTemplate.queryForObject(sql, new Object[]{location_id}, new DeactivateRecordResultMapper());
     }
+
+//    public ModificationResult updateLocation(Location location) {
+//
+//        String sql = "SELECT * FROM zti_projekt2.update_location(?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        jdbcTemplate.update(sql, location.(), location.getStreetAddress(), location.getCity(), location.getZipcode(), location.getState(), location.getCountryCode(),
+//                location.getAcnewActivityId, newCompanyName);
+//    }
 
 }
