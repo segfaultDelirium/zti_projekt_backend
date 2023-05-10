@@ -26,6 +26,10 @@ public class Activity {
         this.activityName = activityName;
     }
 
+    public Activity(){
+
+    }
+
     public Activity(int activityId, boolean isActive, String activityName) {
         this.activityId = activityId;
         this.isActive = isActive;

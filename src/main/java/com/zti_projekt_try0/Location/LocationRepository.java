@@ -45,7 +45,7 @@ public class LocationRepository{
 
     }
 
-    private static final class DeactivateRecordResultMapper implements RowMapper<ModificationResult> {
+    private static final class ModificationResultMapper implements RowMapper<ModificationResult> {
         public ModificationResult mapRow(ResultSet rs, int rowNum) throws SQLException {
             boolean success = rs.getBoolean("success");
             String message = rs.getString("message");
@@ -55,15 +55,24 @@ public class LocationRepository{
 
     ModificationResult deactivateLocation(int location_id){
         String sql = "SELECT * from zti_projekt2.deactivate_location(?)";
-        return jdbcTemplate.queryForObject(sql, new Object[]{location_id}, new DeactivateRecordResultMapper());
+        return jdbcTemplate.queryForObject(sql, new Object[]{location_id}, new ModificationResultMapper());
     }
 
-//    public ModificationResult updateLocation(Location location) {
-//
-//        String sql = "SELECT * FROM zti_projekt2.update_location(?, ?, ?, ?, ?, ?, ?, ?)";
-//
-//        jdbcTemplate.update(sql, location.(), location.getStreetAddress(), location.getCity(), location.getZipcode(), location.getState(), location.getCountryCode(),
-//                location.getAcnewActivityId, newCompanyName);
-//    }
+    public ModificationResult updateLocation(Location location) {
+
+        String sql = "SELECT * from zti_projekt2.update_location(?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Define the parameters for the function
+        Object[] params = new Object[] { location.getLocationId(), location.getStreetAddress(), location.getCity(), location.getZipcode(), location.getState(),
+                location.getCountryCodeIdOrNull(), location.getActivityIdOrNull(), location.getCompanyName() };
+
+        // Execute the function and get the result
+        return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+            boolean success = rs.getBoolean("success");
+            String message = rs.getString("message");
+            return new ModificationResult(success, message);
+        });
+
+    }
 
 }

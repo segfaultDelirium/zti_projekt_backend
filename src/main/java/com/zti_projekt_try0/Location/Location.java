@@ -9,6 +9,30 @@ public class Location {
     private int locationId;
     private boolean isActive;
 
+    private String streetAddress;
+    private String city;
+    private String zipcode;
+    private String state;
+
+    private String companyName;
+
+    private CountryCode countryCode;
+
+    private Activity activity;
+
+    public Location(int locationId, boolean isActive, String streetAddress, String city, String zipcode, String state, String companyName, CountryCode countryCode, Activity activity) {
+        this.locationId = locationId;
+        this.isActive = isActive;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.zipcode = zipcode;
+        this.state = state;
+        this.companyName = companyName;
+        this.countryCode = countryCode;
+        this.activity = activity;
+    }
+
+
     public int getLocationId() {
         return locationId;
     }
@@ -81,27 +105,15 @@ public class Location {
         this.activity = activity;
     }
 
-    private String streetAddress;
-    private String city;
-    private String zipcode;
-    private String state;
 
-    private String companyName;
+    Integer getActivityIdOrNull(){
+        if(this.getActivity() == null) return null;
+        return this.getActivity().getActivityId();
+    }
 
-    private CountryCode countryCode;
-
-    private Activity activity;
-
-    public Location(int locationId, boolean isActive, String streetAddress, String city, String zipcode, String state, String companyName, CountryCode countryCode, Activity activity) {
-        this.locationId = locationId;
-        this.isActive = isActive;
-        this.streetAddress = streetAddress;
-        this.city = city;
-        this.zipcode = zipcode;
-        this.state = state;
-        this.companyName = companyName;
-        this.countryCode = countryCode;
-        this.activity = activity;
+    Integer getCountryCodeIdOrNull(){
+        if(this.getCountryCode() == null) return null;
+        return this.getCountryCode().getCountryCodeId();
     }
 
 

@@ -21,7 +21,7 @@ public class LocationService {
         return locationRepository.deactivateLocation(location_id);
     }
 
-//    public ModificationResult updateLocation(){
-//        this.locationRepository.updateLocation();
-//    }
+    public ModificationResult updateLocation(Location location){
+        return this.locationRepository.updateLocation(location);
+    }
 }
