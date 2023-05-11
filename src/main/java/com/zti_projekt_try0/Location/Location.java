@@ -9,7 +9,7 @@ import com.zti_projekt_try0.CountryCode.CountryCode;
 public class Location {
 
     private int locationId;
-    private boolean isActive;
+    private Boolean isActive;
 
     private String streetAddress;
     private String city;
@@ -49,7 +49,7 @@ public class Location {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
     }
 

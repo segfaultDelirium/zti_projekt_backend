@@ -10,6 +10,8 @@ public class CountryCode {
     private String countryCode;
 //    private Timestamp timestamp;
 
+    public CountryCode(){}
+
     public CountryCode(int countryCodeId, boolean isActive, String countryCode
 //            , Timestamp timestamp
     ) {

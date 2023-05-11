@@ -12,19 +12,69 @@ import java.io.IOException;
 public class LocationDeserializer extends JsonDeserializer<Location> {
 
     @Override
-    public Location deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        JsonNode node = parser.getCodec().readTree(parser);
+    public Location deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+            throws IOException {
+        JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+        Location location = new Location();
 
-        int locationId = node.get("locationId").asInt();
-        boolean isActive = node.get("isActive").asBoolean();
-        String streetAddress = node.get("streetAddress").asText();
-        String city = node.get("city").asText();
-        String zipcode = node.get("zipcode").asText();
-        String state = node.get("state").asText();
-        String companyName = node.get("companyName").asText();
-        CountryCode countryCode = new CountryCode(node.get("countryCode").asInt(), node.get("countryCode").asBoolean(), node.get("countryCode").asText());
-        Activity activity = new Activity(node.get("activity").get("activityId").asInt(), node.get("activity").get("isActive").asBoolean(), node.get("activity").get("activityName").asText());
+        location.setLocationId(node.get("locationId").asInt());
 
-        return new Location(locationId, isActive, streetAddress, city, zipcode, state, companyName, countryCode, activity);
+        if (node.hasNonNull("isActive")){
+            location.setActive(node.get("isActive").asBoolean());
+        }else{
+            location.setActive(null);
+        }
+
+        if (node.hasNonNull("streetAddress")){
+            location.setStreetAddress(node.get("streetAddress").asText());
+        }
+
+        if (node.hasNonNull("city")){
+            location.setCity(node.get("city").asText());
+        }
+
+        if (node.hasNonNull("zipcode")){
+            location.setZipcode(node.get("zipcode").asText());
+        }
+
+        if (node.hasNonNull("state")){
+            location.setState(node.get("state").asText());
+        }
+
+        if (node.hasNonNull("companyName")){
+            location.setCompanyName(node.get("companyName").asText());
+        }
+
+        if(node.hasNonNull("countryCode")){
+            CountryCode countryCode = new CountryCode();
+            JsonNode countryCodeNode = node.get("countryCode");
+            if(countryCodeNode.hasNonNull("code")){
+                countryCode.setCountryCode(countryCodeNode.get("code").asText());
+            }
+            if(countryCodeNode.hasNonNull("isActive")){
+                countryCode.setIsActive(countryCodeNode.get("isActive").asBoolean());
+            }
+            if(countryCodeNode.hasNonNull("countryCodeId")){
+                countryCode.setCountryCodeId(countryCodeNode.get("countryCodeId").asInt());
+            }
+            location.setCountryCode(countryCode);
+        }
+
+        if(node.hasNonNull("activity")){
+            Activity activity = new Activity();
+            JsonNode activityNode = node.get("activity");
+            if(activityNode.hasNonNull("activityName")){
+                activity.setActivityName(activityNode.get("activityName").asText());
+            }
+            if(activityNode.hasNonNull("isActive")){
+                activity.setActive(activityNode.get("isActive").asBoolean());
+            }
+            if(activityNode.hasNonNull("activityId")){
+                activity.setActivityId(activityNode.get("activityId").asInt());
+            }
+            location.setActivity(activity);
+        }
+
+        return location;
     }
 }
