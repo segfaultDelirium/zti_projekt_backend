@@ -28,13 +28,13 @@ public class LocationController {
         return new ResponseEntity<>(result, status);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ModificationResult> updateLocation(@PathVariable("id") int id) {
-//
-//        ModificationResult result = this.locationService.updateLocation(id);
-//        HttpStatus status = result.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-//        return new ResponseEntity<>(result, status);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ModificationResult> reactivateLocation(@PathVariable("id") int id) {
+
+        ModificationResult result = this.locationService.reactivateLocation(id);
+        HttpStatus status = result.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(result, status);
+    }
     @PutMapping
     public ModificationResult updateLocation(@RequestBody Location location) {
         // your code to update the location based on the JSON data in the request body goes here

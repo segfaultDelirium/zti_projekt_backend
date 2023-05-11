@@ -3,13 +3,11 @@ package com.zti_projekt_try0.Location;
 import com.zti_projekt_try0.Activity.Activity;
 import com.zti_projekt_try0.CountryCode.CountryCode;
 import com.zti_projekt_try0.other.ModificationResult;
+import com.zti_projekt_try0.other.ModificationResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -45,16 +43,16 @@ public class LocationRepository{
 
     }
 
-    private static final class ModificationResultMapper implements RowMapper<ModificationResult> {
-        public ModificationResult mapRow(ResultSet rs, int rowNum) throws SQLException {
-            boolean success = rs.getBoolean("success");
-            String message = rs.getString("message");
-            return new ModificationResult(success, message);
-        }
-    }
+
 
     ModificationResult deactivateLocation(int location_id){
         String sql = "SELECT * from zti_projekt2.deactivate_location(?)";
+        return jdbcTemplate.queryForObject(sql, new Object[]{location_id}, new ModificationResultMapper());
+    }
+
+
+    ModificationResult reactivateLocation(int location_id){
+        String sql = "SELECT * from zti_projekt2.reactivate_location(?)";
         return jdbcTemplate.queryForObject(sql, new Object[]{location_id}, new ModificationResultMapper());
     }
 
@@ -74,5 +72,7 @@ public class LocationRepository{
         });
 
     }
+
+
 
 }

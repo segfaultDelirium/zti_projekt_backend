@@ -17,11 +17,15 @@ public class LocationService {
     }
 
 
-    public ModificationResult deactivateLocation(int location_id){
-        return locationRepository.deactivateLocation(location_id);
+    public ModificationResult deactivateLocation(int locationId){
+        return locationRepository.deactivateLocation(locationId);
     }
 
     public ModificationResult updateLocation(Location location){
         return this.locationRepository.updateLocation(location);
+    }
+
+    public ModificationResult reactivateLocation(int locationId){
+        return locationRepository.reactivateLocation(locationId);
     }
 }
