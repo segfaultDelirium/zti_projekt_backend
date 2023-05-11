@@ -2,6 +2,7 @@ package com.zti_projekt_try0.Location;
 
 import com.zti_projekt_try0.Activity.Activity;
 import com.zti_projekt_try0.CountryCode.CountryCode;
+import com.zti_projekt_try0.other.CreationResult;
 import com.zti_projekt_try0.other.ModificationResult;
 import com.zti_projekt_try0.other.ModificationResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,20 @@ public class LocationRepository{
         });
     }
 
-    void addLocation(){
+    CreationResult createLocation(Location location){
+        String sql = "SELECT * from zti_projekt2.create_location(?, ?, ?, ?, ?, ?, ?, ?)";
 
+        // Define the parameters for the function
+        Object[] params = new Object[] { location.isActive(), location.getStreetAddress(), location.getCity(), location.getZipcode(), location.getState(),
+                location.getCountryCodeIdOrNull(), location.getActivityIdOrNull(), location.getCompanyName() };
+
+        // Execute the function and get the result
+        return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+            boolean success = rs.getBoolean("success");
+            String message = rs.getString("message");
+            Integer createdRecordId = rs.getInt("created_record_id");
+            return new CreationResult(success, message, createdRecordId);
+        });
     }
 
 

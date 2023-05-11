@@ -1,5 +1,6 @@
 package com.zti_projekt_try0.Location;
 
+import com.zti_projekt_try0.other.CreationResult;
 import com.zti_projekt_try0.other.ModificationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,9 @@ public class LocationService {
 
     public ModificationResult reactivateLocation(int locationId){
         return locationRepository.reactivateLocation(locationId);
+    }
+
+    public CreationResult createLocation(Location location){
+        return this.locationRepository.createLocation(location);
     }
 }

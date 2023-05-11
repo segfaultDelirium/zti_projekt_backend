@@ -1,5 +1,6 @@
 package com.zti_projekt_try0.Location;
 
+import com.zti_projekt_try0.other.CreationResult;
 import com.zti_projekt_try0.other.ModificationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,5 +42,9 @@ public class LocationController {
         return this.locationService.updateLocation(location);
     }
 
+    @PostMapping
+    public CreationResult createLocation(@RequestBody Location location){
+        return this.locationService.createLocation(location);
+    }
 
 }
