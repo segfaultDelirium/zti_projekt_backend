@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(using = CountryCodeDeserializer.class)
 public class CountryCode {
 
-    private int countryCodeId;
+    private Integer countryCodeId;
     private boolean isActive;
     private String countryCode;
 //    private Timestamp timestamp;
@@ -21,10 +21,10 @@ public class CountryCode {
 //        this.timestamp = timestamp;
     }
 
-    public int getCountryCodeId() {
+    public Integer getCountryCodeId() {
         return countryCodeId;
     }
-    public void setCountryCodeId(int countryCodeId) {
+    public void setCountryCodeId(Integer countryCodeId) {
         this.countryCodeId = countryCodeId;
     }
 

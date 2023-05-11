@@ -36,7 +36,7 @@ public class LocationRepository{
             String companyName = rs.getString("company_name");
             return new Location(locationId, isActive, streetAddress, city, zipcode, state, companyName,
                     new CountryCode(countryCodeId, countryCodeIsActive, countryCode),
-                    new Activity(activityId, activityIsActive, activityName));
+                    new Activity(activityId, activityIsActive, activityName), null);
         });
     }
 
@@ -84,6 +84,30 @@ public class LocationRepository{
             return new ModificationResult(success, message);
         });
 
+    }
+
+    public List<Location> getLocationTimelineGroupedByTimestamp(Integer parameter) {
+        String sql = "select * from zti_projekt2.get_location_timeline_grouped_by_timestamp(?)";
+        Object[] args = new Object[]{parameter};
+        return jdbcTemplate.query(sql, args, (rs, rowNum) -> {
+            Location location = new Location();
+            location.setActive(rs.getBoolean("is_active"));
+            location.setStreetAddress(rs.getString("street_address"));
+            location.setCity(rs.getString("city"));
+            location.setZipcode(rs.getString("zipcode"));
+            location.setState(rs.getString("state"));
+            location.setCompanyName(rs.getString("company_name"));
+            CountryCode countryCode = new CountryCode();
+            countryCode.setCountryCodeId(rs.getInt("country_code_id"));
+            countryCode.setCountryCode(rs.getString("country_code_code"));
+            location.setCountryCode(countryCode);
+            Activity activity = new Activity();
+            activity.setActivityId(rs.getInt("activity_id"));
+            activity.setActivityName(rs.getString("activity_name"));
+            location.setActivity(activity);
+            location.setTimestamp(rs.getTimestamp("timestamp"));
+            return location;
+        });
     }
 
 

@@ -21,17 +21,61 @@ public class LocationSerializer extends JsonSerializer<Location> {
     @Override
     public void serialize(Location location, JsonGenerator generator, SerializerProvider provider) throws IOException {
         generator.writeStartObject();
-        generator.writeNumberField("locationId", location.getLocationId());
-        generator.writeBooleanField("isActive", location.isActive());
-        generator.writeStringField("streetAddress", location.getStreetAddress());
-        generator.writeStringField("city", location.getCity());
-        generator.writeStringField("zipcode", location.getZipcode());
-        generator.writeStringField("state", location.getState());
-        generator.writeStringField("companyName", location.getCompanyName());
+
+        if (location.getLocationId() != null) {
+            generator.writeNumberField("locationId", location.getLocationId());
+        }else{
+            generator.writeNullField("locationId");
+        }
+
+        if (location.isActive() != null) {
+            generator.writeBooleanField("isActive", location.isActive());
+        } else {
+            generator.writeNullField("isActive");
+        }
+
+        if (location.getStreetAddress() != null) {
+            generator.writeStringField("streetAddress", location.getStreetAddress());
+        } else {
+            generator.writeNullField("streetAddress");
+        }
+
+        if (location.getCity() != null) {
+            generator.writeStringField("city", location.getCity());
+        } else {
+            generator.writeNullField("city");
+        }
+
+        if (location.getZipcode() != null) {
+            generator.writeStringField("zipcode", location.getZipcode());
+        } else {
+            generator.writeNullField("zipcode");
+        }
+
+        if (location.getState() != null) {
+            generator.writeStringField("state", location.getState());
+        } else {
+            generator.writeNullField("state");
+        }
+
+        if (location.getCompanyName() != null) {
+            generator.writeStringField("companyName", location.getCompanyName());
+        } else {
+            generator.writeNullField("companyName");
+        }
+
         generator.writeFieldName("activity");
         activitySerializer.serialize(location.getActivity(), generator, provider);
+
         generator.writeFieldName("countryCode");
         countryCodeJsonSerializer.serialize(location.getCountryCode(), generator, provider);
+
+        if (location.getTimestamp() != null) {
+            generator.writeStringField("timestamp", location.getTimestamp().toString());
+        } else {
+            generator.writeNullField("timestamp");
+        }
+
         generator.writeEndObject();
     }
 }

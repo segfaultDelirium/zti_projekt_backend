@@ -47,4 +47,9 @@ public class LocationController {
         return this.locationService.createLocation(location);
     }
 
+    @GetMapping("/{id}")
+    public List<Location> getLocationTimelineGroupedByTimestamp(@PathVariable("id") int id){
+        return this.locationService.getLocationTimelineGroupedByTimestamp(id);
+    }
+
 }

@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.zti_projekt_try0.Activity.Activity;
 import com.zti_projekt_try0.CountryCode.CountryCode;
 
+import java.sql.Timestamp;
+
 @JsonDeserialize(using = LocationDeserializer.class)
 public class Location {
 
-    private int locationId;
+    private Integer locationId;
     private Boolean isActive;
 
     private String streetAddress;
@@ -22,9 +24,17 @@ public class Location {
 
     private Activity activity;
 
-    public Location(){}
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
 
-    public Location(int locationId, boolean isActive, String streetAddress, String city, String zipcode, String state, String companyName, CountryCode countryCode, Activity activity) {
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    private Timestamp timestamp;
+
+    public Location(Integer locationId, Boolean isActive, String streetAddress, String city, String zipcode, String state, String companyName, CountryCode countryCode, Activity activity, Timestamp timestamp) {
         this.locationId = locationId;
         this.isActive = isActive;
         this.streetAddress = streetAddress;
@@ -34,18 +44,20 @@ public class Location {
         this.companyName = companyName;
         this.countryCode = countryCode;
         this.activity = activity;
+        this.timestamp = timestamp;
     }
 
+    public Location(){}
 
-    public int getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 

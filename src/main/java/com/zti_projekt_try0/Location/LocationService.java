@@ -33,4 +33,8 @@ public class LocationService {
     public CreationResult createLocation(Location location){
         return this.locationRepository.createLocation(location);
     }
+
+    public List<Location> getLocationTimelineGroupedByTimestamp(Integer id){
+        return this.locationRepository.getLocationTimelineGroupedByTimestamp(id);
+    }
 }

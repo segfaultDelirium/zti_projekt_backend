@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(using = ActivityDeserializer.class)
 public class Activity {
 
-    private int activityId;
+    private Integer activityId;
     private boolean isActive;
     private String activityName;
 
@@ -22,11 +22,11 @@ public class Activity {
 
 
 
-    public int getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 
