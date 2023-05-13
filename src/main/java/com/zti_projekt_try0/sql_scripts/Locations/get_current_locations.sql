@@ -42,7 +42,7 @@ order by timestamp desc
 from zti_projekt2.location_country_code
     join zti_projekt2.country_code_code on zti_projekt2.country_code_code.country_code_id = zti_projekt2.location_country_code.country_code_id
 where zti_projekt2.location.location_id = zti_projekt2.location_country_code.location_id
-order by location_country_code.timestamp, country_code_code.timestamp desc
+order by location_country_code.timestamp desc, country_code_code.timestamp desc
     limit 1
     ),
 
@@ -56,7 +56,7 @@ order by location_country_code.timestamp desc
 from zti_projekt2.location_country_code
     join zti_projekt2.country_code_is_active on zti_projekt2.country_code_is_active.country_code_id = zti_projekt2.location_country_code.country_code_id
 where zti_projekt2.location.location_id = zti_projekt2.location_country_code.location_id
-order by location_country_code.timestamp, country_code_is_active.timestamp desc
+order by location_country_code.timestamp desc, country_code_is_active.timestamp desc
     limit 1
     ),
 
@@ -65,7 +65,7 @@ order by location_country_code.timestamp, country_code_is_active.timestamp desc
 from zti_projekt2.location_activity
     join zti_projekt2.activity_name on zti_projekt2.activity_name.activity_id = zti_projekt2.location_activity.activity_id
 where zti_projekt2.location.location_id = zti_projekt2.location_activity.location_id
-order by location_activity.timestamp, activity_name.timestamp desc
+order by location_activity.timestamp desc, activity_name.timestamp desc
     limit 1
     ),
     (select zti_projekt2.location_activity.activity_id
@@ -78,7 +78,7 @@ order by location_activity.timestamp desc
 from zti_projekt2.location_activity
     join zti_projekt2.activity_is_active on zti_projekt2.activity_is_active.activity_id = zti_projekt2.location_activity.activity_id
 where zti_projekt2.location.location_id = zti_projekt2.location_activity.location_id
-order by location_activity.timestamp, activity_is_active.timestamp desc
+order by location_activity.timestamp desc, activity_is_active.timestamp desc
     limit 1
     ),
 
