@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @CrossOrigin
@@ -50,6 +51,13 @@ public class LocationController {
     @GetMapping("/{id}")
     public List<Location> getLocationTimelineGroupedByTimestamp(@PathVariable("id") int id){
         return this.locationService.getLocationTimelineGroupedByTimestamp(id);
+    }
+
+    @GetMapping("/at-given-time/{isoDateTime}")
+    public List<Location> getLocationsAtGivenTime(@PathVariable("isoDateTime") String isoDateTime){
+
+        Timestamp timestamp = Timestamp.valueOf(isoDateTime.replace("T", " ").replace("Z", ""));
+        return this.locationService.getLocationsAtGivenTime(timestamp);
     }
 
 }

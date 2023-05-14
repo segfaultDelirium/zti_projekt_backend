@@ -5,6 +5,7 @@ import com.zti_projekt_try0.other.ModificationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -36,5 +37,10 @@ public class LocationService {
 
     public List<Location> getLocationTimelineGroupedByTimestamp(Integer id){
         return this.locationRepository.getLocationTimelineGroupedByTimestamp(id);
+    }
+
+    public List<Location> getLocationsAtGivenTime(Timestamp timestamp){
+
+        return this.locationRepository.getLocationsAtGivenTime(timestamp);
     }
 }
