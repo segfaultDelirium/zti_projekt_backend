@@ -134,6 +134,30 @@ public class LocationRepository{
         });
     }
 
+    public Location getCurrentLocation(int id){
+        String query = "select * from zti_projekt2.get_current_locations()\n" +
+                "where location_id = ?";
+        Object[] args = {id};
+        List<Location> oneOrZeroResults = jdbcTemplate.query(query, args, (rs, rowNum) -> {
+            int locationId = rs.getInt("location_id");
+            boolean isActive = rs.getBoolean("is_active");
+            String streetAddress = rs.getString("street_address");
+            String city = rs.getString("city");
+            String zipcode = rs.getString("zipcode");
+            String state = rs.getString("state");
+            String countryCode = rs.getString("country_code");
+            int countryCodeId = rs.getInt("country_code_id");
+            boolean countryCodeIsActive = rs.getBoolean("is_country_code_active");
+            String activityName = rs.getString("activity_name");
+            int activityId = rs.getInt("activity_id");
+            boolean activityIsActive = rs.getBoolean("is_activity_active");
+            String companyName = rs.getString("company_name");
+            return new Location(locationId, isActive, streetAddress, city, zipcode, state, companyName,
+                    new CountryCode(countryCodeId, countryCodeIsActive, countryCode),
+                    new Activity(activityId, activityIsActive, activityName), null);
+        });
+        return oneOrZeroResults.get(0);
+    }
 //    TODO: create a postgresql function to get id of rows that have been modified between two timestamps
 
 

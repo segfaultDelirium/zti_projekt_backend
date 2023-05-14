@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @CrossOrigin
 @RestController
@@ -48,16 +49,26 @@ public class LocationController {
         return this.locationService.createLocation(location);
     }
 
-    @GetMapping("/{id}")
-    public List<Location> getLocationTimelineGroupedByTimestamp(@PathVariable("id") int id){
-        return this.locationService.getLocationTimelineGroupedByTimestamp(id);
-    }
+//    @GetMapping("/timeline/{id}")
+//    public List<Location> getLocationTimelineGroupedByTimestamp(@PathVariable("id") int id){
+//        return this.locationService.getLocationTimelineGroupedByTimestamp(id);
+//    }
 
     @GetMapping("/at-given-time/{isoDateTime}")
     public List<Location> getLocationsAtGivenTime(@PathVariable("isoDateTime") String isoDateTime){
 
         Timestamp timestamp = Timestamp.valueOf(isoDateTime.replace("T", " ").replace("Z", ""));
         return this.locationService.getLocationsAtGivenTime(timestamp);
+    }
+
+    @GetMapping("/timeline/{id}")
+    public CompletableFuture<List<Location>> getTimelineWithCurrentLocationAsync(@PathVariable int id) {
+        return locationService.getTimelineWithCurrentLocationAsync(id);
+    }
+
+    @GetMapping("/{id}")
+    public Location getCurrentLocation(@PathVariable("id") int id){
+        return this.locationService.getCurrentLocation(id);
     }
 
 }

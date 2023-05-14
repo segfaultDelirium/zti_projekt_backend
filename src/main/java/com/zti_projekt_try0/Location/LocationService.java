@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class LocationService {
@@ -35,12 +36,30 @@ public class LocationService {
         return this.locationRepository.createLocation(location);
     }
 
-    public List<Location> getLocationTimelineGroupedByTimestamp(Integer id){
-        return this.locationRepository.getLocationTimelineGroupedByTimestamp(id);
+    public CompletableFuture<List<Location>> getLocationTimelineGroupedByTimestampAsync(int id) {
+        return CompletableFuture.supplyAsync(() -> this.locationRepository.getLocationTimelineGroupedByTimestamp(id));
+    }
+
+    public CompletableFuture<Location> getCurrentLocationAsync(int id) {
+        return CompletableFuture.supplyAsync(() -> this.locationRepository.getCurrentLocation(id));
+    }
+
+    public CompletableFuture<List<Location>> getTimelineWithCurrentLocationAsync(int id) {
+        CompletableFuture<List<Location>> timelineFuture = getLocationTimelineGroupedByTimestampAsync(id);
+        CompletableFuture<Location> currentLocationFuture = getCurrentLocationAsync(id);
+
+        return timelineFuture.thenCombine(currentLocationFuture, (timeline, currentLocation) -> {
+            timeline.add(0, currentLocation);
+            return timeline;
+        });
     }
 
     public List<Location> getLocationsAtGivenTime(Timestamp timestamp){
 
         return this.locationRepository.getLocationsAtGivenTime(timestamp);
+    }
+
+    public Location getCurrentLocation(int id){
+        return this.locationRepository.getCurrentLocation(id);
     }
 }
