@@ -49,11 +49,6 @@ public class LocationController {
         return this.locationService.createLocation(location);
     }
 
-//    @GetMapping("/timeline/{id}")
-//    public List<Location> getLocationTimelineGroupedByTimestamp(@PathVariable("id") int id){
-//        return this.locationService.getLocationTimelineGroupedByTimestamp(id);
-//    }
-
     @GetMapping("/at-given-time/{isoDateTime}")
     public List<Location> getLocationsAtGivenTime(@PathVariable("isoDateTime") String isoDateTime){
 
@@ -71,4 +66,11 @@ public class LocationController {
         return this.locationService.getCurrentLocation(id);
     }
 
+    @GetMapping("/changes")
+    public List<Location> getLocationsWhichChangedBetweenTimestamps(@RequestParam("startDate") String startDateString,
+                                                                    @RequestParam("endDate") String endDateString){
+        Timestamp startDate = LocationService.stringISODateTimeToTimestamp(startDateString);
+        Timestamp endDate = LocationService.stringISODateTimeToTimestamp(endDateString);
+        return this.locationService.getLocationsWhichChangedBetweenTimestamps(startDate, endDate);
+    }
 }

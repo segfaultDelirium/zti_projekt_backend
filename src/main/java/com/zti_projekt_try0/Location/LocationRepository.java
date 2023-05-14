@@ -72,7 +72,7 @@ public class LocationRepository{
 
     public ModificationResult updateLocation(Location location) {
 
-        String sql = "SELECT * from zti_projekt2.update_location(?, ?, ?, ?, ?, ?, ?, ?)";
+         String sql = "SELECT * from zti_projekt2.update_location(?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Define the parameters for the function
         Object[] params = new Object[] { location.getLocationId(), location.getStreetAddress(), location.getCity(), location.getZipcode(), location.getState(),
@@ -158,8 +158,29 @@ public class LocationRepository{
         });
         return oneOrZeroResults.get(0);
     }
-//    TODO: create a postgresql function to get id of rows that have been modified between two timestamps
 
+    public List<Location> getLocationsWhichChangedBetweenTimestamps(Timestamp startDate, Timestamp endDate){
+        String query = "select * from zti_projekt2.get_locations_which_changed_between_timestamps(?, ?)";
+        Object[] args = {startDate, endDate};
+        return jdbcTemplate.query(query, args, (rs, rowNum) -> {
+            int locationId = rs.getInt("location_id");
+            boolean isActive = rs.getBoolean("is_active");
+            String streetAddress = rs.getString("street_address");
+            String city = rs.getString("city");
+            String zipcode = rs.getString("zipcode");
+            String state = rs.getString("state");
+            String countryCode = rs.getString("country_code");
+            int countryCodeId = rs.getInt("country_code_id");
+            boolean countryCodeIsActive = rs.getBoolean("is_country_code_active");
+            String activityName = rs.getString("activity_name");
+            int activityId = rs.getInt("activity_id");
+            boolean activityIsActive = rs.getBoolean("is_activity_active");
+            String companyName = rs.getString("company_name");
+            return new Location(locationId, isActive, streetAddress, city, zipcode, state, companyName,
+                    new CountryCode(countryCodeId, countryCodeIsActive, countryCode),
+                    new Activity(activityId, activityIsActive, activityName), null);
+        });
+    }
 
 
 }

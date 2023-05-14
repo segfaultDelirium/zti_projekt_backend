@@ -62,4 +62,13 @@ public class LocationService {
     public Location getCurrentLocation(int id){
         return this.locationRepository.getCurrentLocation(id);
     }
+
+
+    public List<Location> getLocationsWhichChangedBetweenTimestamps(Timestamp startDate, Timestamp endDate){
+        return this.locationRepository.getLocationsWhichChangedBetweenTimestamps(startDate, endDate);
+    }
+
+    public static Timestamp stringISODateTimeToTimestamp(String isoDateTime){
+        return Timestamp.valueOf(isoDateTime.replace("T", " ").replace("Z", ""));
+    }
 }
