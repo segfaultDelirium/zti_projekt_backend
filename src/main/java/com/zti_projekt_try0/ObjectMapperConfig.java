@@ -10,8 +10,10 @@ import com.zti_projekt_try0.Location.Location;
 import com.zti_projekt_try0.Location.LocationSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
+@EnableAspectJAutoProxy
 public class ObjectMapperConfig {
 
     @Bean

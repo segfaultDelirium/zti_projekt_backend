@@ -18,6 +18,7 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
+
     @GetMapping
     public List<Location> getCurrentLocations(){
         return locationService.getCurrentLocations();
